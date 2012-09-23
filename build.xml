@@ -1,25 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="AceWiki" default="buildeverything" basedir=".">
+
+    <property name="scala.home" value="/usr/local/Cellar/scala/2.9.2/libexec"/>
+
+    <path id="project.classpath">
+        <pathelement location="classes/" />
+        <fileset dir="${scala.home}/lib/"><include name="*.jar" /></fileset>
+<!--
+        <fileset dir="/opt/local/lib/swipl-6.1.9/lib/"><include name="*.jar" /> </fileset>
+-->
+        <fileset dir="/usr/local/lib/swipl-6.2.0/lib/"><include name="*.jar" /> </fileset>
+        <pathelement location="lib/slf4j-api-1.6.6.jar"/>
+  </path>
+
+  <!-- Define scala compiler, scaladoc, etc command -->
     
     <property name="version" value="0.5.3"/>
     <property file="src/ch/uzh/ifi/attempto/acewiki/acewiki.properties"/>
     <property file="src/ch/uzh/ifi/attempto/aceeditor/aceeditor.properties"/>
-    
-    <target name="compile"
+
+    <target name="init">
+    <property
+        name="scala-library.jar"
+        value="${scala.home}/lib/scala-library.jar"
+         />
+    <path id="build.classpath">
+      <pathelement location="${scala-library.jar}"   />
+      <!--<pathelement location="${your.path}"   />-->
+      <pathelement location="${build.dir}"   />
+    </path>
+    <taskdef resource="scala/tools/ant/antlib.xml">
+      <classpath>
+        <pathelement location="${scala.home}/lib/scala-compiler.jar"   />
+        <pathelement location="${scala-library.jar}"   />
+      </classpath>
+    </taskdef>
+    </target>  
+    <target name="compile" depends="init"
             description="Compile the Java files">
     	<mkdir dir="classes"/>
+
+    <!-- for scala version
+          <scalac
+            srcdir="src/"
+            destdir="classes/"
+            classpathref="project.classpath"
+            force="changed">
+          <include name="**/*.scala"/>
+        </scalac>
+    -->
+
+
+
         <javac
+            target="1.5"
             encoding="utf-8"
             includeantruntime="false"
             debug="true"
             debuglevel="lines,vars,source"
             srcdir="src/"
             excludes="**/test/**"
-            classpath="lib/slf4j-api-1.6.6.jar;lib/gf-java.jar;lib/guava-11.0.1.jar;lib/aterm-java-1.6.jar;lib/attempto-ape.jar;lib/commons-fileupload-1.2.1.jar;lib/commons-lang-2.2.jar;lib/commons-logging-1.1.jar;lib/Echo3_App.jar;lib/Echo3_FileTransfer_App.jar;lib/Echo3_FileTransfer_WebContainer.jar;lib/Echo3_FileTransfer_Model.jar;lib/Echo3_FileTransfer_Receiver.jar;lib/Echo3_Extras_App.jar;lib/Echo3_Extras_WebContainer.jar;lib/Echo3_WebContainer.jar;lib/echopoint-3.0.0b5.jar;lib/jdom.jar;lib/owlapi-bin.jar;lib/HermiT.jar;lib/owllink-bin.jar;lib/relaxngDatatype.jar;lib/servlet-api.jar;lib/xsdlib.jar;lib/xstream-1.3.1.jar;lib/JPGF.final.jar"
+            classpath="lib/slf4j-api-1.6.6.jar;lib/gf-java.jar;lib/guava-11.0.1.jar;lib/aterm-java-1.6.jar;lib/attempto-ape.jar;lib/commons-fileupload-1.2.1.jar;lib/commons-lang-2.2.jar;lib/commons-logging-1.1.jar;lib/Echo3_App.jar;lib/Echo3_FileTransfer_App.jar;lib/Echo3_FileTransfer_WebContainer.jar;lib/Echo3_FileTransfer_Model.jar;lib/Echo3_FileTransfer_Receiver.jar;lib/Echo3_Extras_App.jar;lib/Echo3_Extras_WebContainer.jar;lib/Echo3_WebContainer.jar;lib/echopoint-3.0.0b5.jar;lib/jdom.jar;lib/owlapi-bin.jar;lib/HermiT.jar;lib/owllink-bin.jar;lib/relaxngDatatype.jar;lib/servlet-api.jar;lib/xsdlib.jar;lib/xstream-1.3.1.jar;lib/JPGF.final.jar;lib/jpl.jar"
             destdir="classes/">
           <compilerarg value="-Xlint"/>
         </javac>
+
+        
         <copy todir="classes/ch/uzh/ifi/attempto/echocomp/style">
             <fileset dir="src/ch/uzh/ifi/attempto/echocomp/style"/>
         </copy>
@@ -123,11 +170,12 @@
     
     <target name="createwebapps"
             description="Compiles everything and builds the WAR file that is used to run the web applications"
-            depends="createjars">
+            depends="createjars,init">
         <mkdir dir="war/WEB-INF/lib"/>
         <copy todir="war/WEB-INF/lib">
             <fileset dir="lib/" includes="*.jar"/>
             <fileset dir="." includes="*.jar"/>
+            <!-- <fileset dir="/usr/local/Cellar/scala/2.9.2/libexec/lib/" includes="scala-library.jar"/> -->
         </copy>
         <delete file="acewiki.war"/>
         <jar

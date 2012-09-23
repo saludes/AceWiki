@@ -43,7 +43,7 @@ public class GFEngine extends AbstractAceWikiEngine {
 	public static final String TYPE_TEST = "test";
 
 	private Map<String, GFHandler> languageHandlers = new HashMap<String, GFHandler>();
-	private AceWikiReasoner reasoner = new DummyReasoner();
+	protected AceWikiReasoner reasoner = new DummyReasoner();
 	private GFGrammar gfGrammar;
 
 	/**

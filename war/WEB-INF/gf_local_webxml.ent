@@ -1,0 +1,96 @@
+<servlet>
+    <servlet-name>/grammars/Farm.pgf</servlet-name>
+    <servlet-class>ch.uzh.ifi.attempto.acewiki.BackendServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+    <init-param>
+      <param-name>engine_class</param-name>
+      <param-value>ch.uzh.ifi.attempto.acewiki.gfservice.WPEngine</param-value>
+    </init-param>
+    <init-param>
+      <param-name>pgf_name</param-name>
+      <param-value>/grammars/Farm.pgf</param-value>
+    </init-param>
+    <init-param>
+      <param-name>service_uri</param-name>
+      <param-value>http://localhost:41296</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ontology</param-name>
+      <param-value>grammars__Farm</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>/grammars/Farm.pgf</servlet-name>
+    <url-pattern>/grammars/farm</url-pattern>
+  </servlet-mapping>
+
+ <servlet>
+  <servlet-name>/grammars/Farm.pgf/FarmEng</servlet-name>
+  <servlet-class>ch.uzh.ifi.attempto.acewiki.AceWikiServlet</servlet-class>
+  <init-param>
+    <param-name>backend</param-name>
+    <param-value>/grammars/Farm.pgf</param-value>
+  </init-param>
+  <init-param>
+    <param-name>language</param-name>
+    <param-value>FarmEng</param-value>
+  </init-param>
+  <init-param>
+    <param-name>title</param-name>
+    <param-value>Wiki on farm problem</param-value>
+  </init-param>
+</servlet>
+<servlet-mapping>
+  <servlet-name>/grammars/Farm.pgf/FarmEng</servlet-name>
+  <url-pattern>/grammars/farm/eng</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+    <servlet-name>/grammars/Fruits.pgf</servlet-name>
+    <servlet-class>ch.uzh.ifi.attempto.acewiki.BackendServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+    <init-param>
+      <param-name>engine_class</param-name>
+      <param-value>ch.uzh.ifi.attempto.acewiki.gfservice.WPEngine</param-value>
+    </init-param>
+    <init-param>
+      <param-name>pgf_name</param-name>
+      <param-value>/grammars/Fruits.pgf</param-value>
+    </init-param>
+    <init-param>
+      <param-name>service_uri</param-name>
+      <param-value>http://localhost:41296</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ontology</param-name>
+      <param-value>grammars__Fruits</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>/grammars/Fruits.pgf</servlet-name>
+    <url-pattern>/grammars/fruits</url-pattern>
+  </servlet-mapping>
+
+ <servlet>
+  <servlet-name>/grammars/Fruits.pgf/FruitsEng</servlet-name>
+  <servlet-class>ch.uzh.ifi.attempto.acewiki.AceWikiServlet</servlet-class>
+  <init-param>
+    <param-name>backend</param-name>
+    <param-value>/grammars/Fruits.pgf</param-value>
+  </init-param>
+  <init-param>
+    <param-name>language</param-name>
+    <param-value>FruitsEng</param-value>
+  </init-param>
+  <init-param>
+    <param-name>title</param-name>
+    <param-value>Wiki on fruits problem</param-value>
+  </init-param>
+</servlet>
+<servlet-mapping>
+  <servlet-name>/grammars/Fruits.pgf/FruitsEng</servlet-name>
+  <url-pattern>/grammars/fruits/eng</url-pattern>
+</servlet-mapping>
+
+

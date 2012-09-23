@@ -34,7 +34,9 @@ import ch.uzh.ifi.attempto.acewiki.core.Question;
 import ch.uzh.ifi.attempto.acewiki.core.Sentence;
 import ch.uzh.ifi.attempto.acewiki.core.Statement;
 import ch.uzh.ifi.attempto.acewiki.gfservice.GFDeclaration;
+import ch.uzh.ifi.attempto.acewiki.gfservice.WPDeclaration;
 import ch.uzh.ifi.attempto.acewiki.gfservice.GFEngine;
+import ch.uzh.ifi.attempto.acewiki.gfservice.WPEngine;
 import ch.uzh.ifi.attempto.acewiki.gfservice.GFGrammar;
 import ch.uzh.ifi.attempto.acewiki.gfservice.ParseState;
 import ch.uzh.ifi.attempto.echocomp.HSpace;
@@ -92,9 +94,9 @@ public class SentenceComponent extends Column implements ActionListener {
 
 
 
-	private Sentence sentence;
+	protected Sentence sentence;
 	private Wiki wiki;
-	private WikiPage hostPage;
+	protected WikiPage hostPage;
 
 	private Row sentenceRow = new Row();
 	private StatementMenu dropDown;
@@ -219,7 +221,11 @@ public class SentenceComponent extends Column implements ActionListener {
 
 					@Override
 					public void execute() {
-						GFDeclaration gfDecl = new GFDeclaration(((GFEngine) engine).getGFGrammar());
+						GFDeclaration gfDecl;
+						if (engine instanceof WPEngine)
+							gfDecl = new WPDeclaration(((GFEngine) engine).getGFGrammar());
+						else
+							gfDecl = new GFDeclaration(((GFEngine) engine).getGFGrammar());
 						Article article = sentence.getArticle();
 						// TODO: understand better why the init-call is needed
 						gfDecl.init(article.getOntology(), article);

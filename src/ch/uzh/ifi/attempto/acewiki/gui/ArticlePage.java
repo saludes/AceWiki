@@ -120,7 +120,9 @@ public abstract class ArticlePage extends WikiPage implements ActionListener {
 
 		for (Statement s : getArticle().getStatements()) {
 			if (s instanceof Sentence) {
-				textColumn.add(new SentenceComponent((Sentence) s, this));
+				WPSentenceComponent sc = new WPSentenceComponent((Sentence) s, this);
+				textColumn.add(sc);
+				sc.displayCores(textColumn);
 			} else if (s instanceof Comment) {
 				textColumn.add(new CommentComponent((Comment) s, this));
 			}
